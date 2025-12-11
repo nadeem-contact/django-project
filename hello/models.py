@@ -11,6 +11,7 @@ class Product(models.Model):
     title = models.CharField(max_length=100)
     price = models.IntegerField()
     stock = models.IntegerField(default=0)
+    category = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return self.title

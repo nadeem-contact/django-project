@@ -7,7 +7,7 @@ from .serializers import ItemSerializer
 class ItemListCreateAPIView(APIView):
     def get(self, request):
         print("one")
-        items = Item.objects.filter(id=5).values()
+        items = Item.objects.all().values()
         print("two")
         serializer = ItemSerializer(items, many=True)
         print("three")
