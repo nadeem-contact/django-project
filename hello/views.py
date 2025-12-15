@@ -1,6 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 from .models import Item, Customer, Product 
 from .serializers import ItemSerializer, CustomerSerializer, ProductSerializer
 
@@ -102,8 +104,6 @@ class ProductDetailAPIView(APIView):
         product.delete()
         return Response({"message": "Deleted"}, status=status.HTTP_204_NO_CONTENT)
                         
-from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
 
 class CustomerListCreateAPIView(generics.ListCreateAPIView):
     queryset = Customer.objects.all()
