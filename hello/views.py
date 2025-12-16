@@ -59,12 +59,13 @@ class ItemDetailAPIView(APIView):
         item.delete()
         return Response({"message": "Deleted"}, status=status.HTTP_204_NO_CONTENT)
 
+
 class ProductListCreateAPIView(APIView):
     def get(self, request):
-        products = Product.objects.all()
+        products = Product.objects.filter(id=1)
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
-
+    
     def post(self, request):
         serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
@@ -115,6 +116,7 @@ class CustomerDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
     permission_classes = [IsAuthenticated]
+
 
 # class CustomerAPIView(APIView):
 
