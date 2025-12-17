@@ -2,9 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
+from rest_framework.generics import ListCreateAPIView
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from .models import Item, Customer, Product 
 from .serializers import ItemSerializer, CustomerSerializer, ProductSerializer
+from .filters import CustomerFilter
 
 class ItemListCreateAPIView(APIView):
     def get(self, request):
@@ -62,7 +65,8 @@ class ItemDetailAPIView(APIView):
 
 class ProductListCreateAPIView(APIView):
     def get(self, request):
-        products = Product.objects.filter(id=1)
+        products = Product.objects.all()
+        #products = Product.objects.filter(category__iexact='b')
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
     
@@ -109,6 +113,8 @@ class ProductDetailAPIView(APIView):
 class CustomerListCreateAPIView(generics.ListCreateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = CustomerFilter
     permission_classes = [IsAuthenticated]
 
 
